@@ -1,0 +1,35 @@
+﻿
+region naos
+{
+	static class Console
+	{
+		const VRAM_BASE : uint = 0xB8000;
+		const WIDTH     : uint = 80;
+		const HEIGHT    : uint = 25;
+		const SIZE		: uint = (WIDTH * HEIGHT * 2);
+		
+		var _vbuff : @uint;
+		var _cx    : byte;
+		var _cy    : byte;
+
+		fn Init() : void
+		{
+			_vbuff = VRAM_BASE;
+			Clear();
+		}
+
+		fn Clear(color : byte) : void
+		{
+			var pos : uint = 0;
+			while (addr < SIZE)
+			{
+				_vbuff[addr] = 0x20;
+				_vbuff[addr + 1] = color;
+				addr += 2;
+			}
+			_cx = 0; _cy = 0;
+		}
+
+
+	}
+}

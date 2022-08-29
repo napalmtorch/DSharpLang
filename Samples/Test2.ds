@@ -1,0 +1,45 @@
+﻿import "stdlib.gs";
+
+region NAOS
+{
+	static class Kernel
+	{
+		const num : uint = 128;
+
+		var _vram     : @uint;
+		var _width    : uint;
+		var _height   : uint;
+		var _testdata : byte[128 + num];
+
+		fn Boot() : void
+		{
+			_width  = 640;
+			_height = 480;
+
+			for (var i : int = 0; i < 256; i += 1) { _testdata[i] = 0x69; }
+
+			var blah : int = Foo(420) - 69;
+			blah = _width;
+			blah += _height;
+			blah = blah * 2 + 4;
+			blah >>= 3;
+
+			VideoClear(0xFF007F7F);
+		}
+
+		fn VideoClear(color : uint) : void
+		{
+			var i : uint = 0;
+			while (i < _width * _height)
+			{
+				_vram[i] = color;
+				i += 1;
+			}	
+		}
+
+		fn Foo(num : int) : int
+		{
+			return num * 420 + 69;
+		}
+	}
+}
